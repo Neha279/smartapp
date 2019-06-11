@@ -1,0 +1,47 @@
+<mat-tab-group >
+    <mat-tab label={{types[1]}} class="lightblue">
+            <div *ngIf="wardsList?.length ==0">
+                    <img src="../../assets/loaidng.gif" class="imgload">
+            </div>
+        <div *ngIf="wardsList && wardsList?.length > 0" class="margindiv">
+            <mat-label> Select the Ward No. </mat-label>
+            <div class="selectward">
+                <mat-select [(value)]="selected" >
+                    <mat-option value={{ward}} *ngFor="let ward of wardsList trackBy: trackByFn ">Ward {{ward}}</mat-option> 
+                </mat-select> 
+            </div>
+    
+            <cdk-virtual-scroll-viewport [itemSize]="50" class="example-viewport" minBufferPx="800" maxBufferPx="800"
+    (scrolledIndexChange)="getNextBatch($event)">
+                <ul>
+                        <li *ngFor="let d of dataN[selected]; trackBy: trackByFn "> 
+                            <pre>{{d.first_name}} {{ d.family_name}}</pre>
+                        </li>
+                </ul>
+             </cdk-virtual-scroll-viewport>
+        </div>
+    </mat-tab>
+
+    <mat-tab label={{types[0]}}>
+
+        <cdk-virtual-scroll-viewport [itemSize]="50" class="example-viewport" minBufferPx="800" maxBufferPx="800"
+        (scrolledIndexChange)="getNextBatch($event)">
+            <ul>
+                    <li *cdkVirtualFor="let d of dataP; trackBy: trackByFn " > 
+                        <pre>{{d.first_name}} {{ d.family_name}}</pre>
+                    </li>
+            </ul>
+        </cdk-virtual-scroll-viewport>
+    </mat-tab>
+
+    <mat-tab label={{types[2]}} >
+        <cdk-virtual-scroll-viewport [itemSize]="50" class="example-viewport" minBufferPx="800" maxBufferPx="800"
+        (scrolledIndexChange)="getNextBatch($event)">
+            <ul>
+                    <li *ngFor="let d of dataD; trackBy: trackByFn"> 
+                        <pre>{{d.first_name}} {{ d.family_name}}  : {{d.pager_number}}</pre>
+                    </li>
+            </ul>
+        </cdk-virtual-scroll-viewport>
+    </mat-tab>
+</mat-tab-group>
